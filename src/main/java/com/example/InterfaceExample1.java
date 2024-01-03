@@ -1,5 +1,5 @@
 package com.example;
 
-public interface InterfaceExample {
+public interface InterfaceExample1 {
     void doSomething();
 }
