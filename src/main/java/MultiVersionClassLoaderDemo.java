@@ -12,8 +12,8 @@ public class MultiVersionClassLoaderDemo {
         String jarPathV2 =  "/Users/namratamaradkar/AppData/IdeaProjects/CustomJar2/target/CustomJar2-1.0-SNAPSHOT.jar";
 
         // Create custom class loaders for each version
-        ClassLoader classLoaderV1 = new URLClassLoader(new URL[]{new File(jarPathV1).toURI().toURL()});
-        ClassLoader classLoaderV2 = new URLClassLoader(new URL[]{new File(jarPathV2).toURI().toURL()});
+        ClassLoader classLoaderV1 = new URLClassLoader(new URL[]{new File(jarPathV1).toURI().toURL()},null);
+        ClassLoader classLoaderV2 = new URLClassLoader(new URL[]{new File(jarPathV2).toURI().toURL()},null);
 
         // Load classes from different versions
         Class<?> classFromV1 = Class.forName("com.example.InterfaceExampleImpl", true, classLoaderV1);
@@ -35,6 +35,12 @@ public class MultiVersionClassLoaderDemo {
                 .get();
 
         methodObject2.invoke(instanceFromV2);
+//        // Replace "com.example.CustomClass" with the fully qualified name of your class
+//        CustomURLClassLoader customClassLoader = new CustomURLClassLoader(new URL[]{new File(jarPathV1).toURI().toURL()});
+//        Class<?> customClass = customClassLoader.loadClass("com.example.InterfaceExampleImpl");
+//        // Instantiate the custom class
+//        Object instance = customClass.getDeclaredConstructor().newInstance();
+
 
 
         // Use the instances as needed
