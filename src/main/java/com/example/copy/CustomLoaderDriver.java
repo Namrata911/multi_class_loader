@@ -8,7 +8,8 @@ public class CustomLoaderDriver {
     public static void main(String[] args) throws Exception {
         String progClass = "com.example.InterfaceExampleImpl";
 
-        CustomClassLoader customLoader = new CustomClassLoader(CustomLoaderDriver.class.getClassLoader());
+        CustomClassLoader customLoader = new CustomClassLoader(CustomLoaderDriver.class.getClassLoader(),
+              "/Users/namratamaradkar/AppData/IdeaProjects/multiClassLoader/external_jars/c1/");
         Class<?> clas = customLoader.loadClass(progClass);
         Object instanceFromV1 = Arrays.stream(clas.getDeclaredConstructors()).findFirst().get().newInstance();
         Method methodObject1 = Arrays.stream(instanceFromV1.getClass().getMethods())

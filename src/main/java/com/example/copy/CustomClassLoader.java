@@ -1,15 +1,13 @@
 package com.example.copy;
 
-import jdk.internal.loader.BootLoader;
+
 
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 
 /**
  * Our custom implementation of the ClassLoader.
@@ -30,8 +28,12 @@ public class CustomClassLoader extends ClassLoader {
      * @param parent Parent ClassLoader
      *               (may be from getClass().getClassLoader())
      */
-    public CustomClassLoader(ClassLoader parent) {
+    String relativeJarPath;
+
+    public CustomClassLoader(ClassLoader parent, String relativeJarPath) {
         super(parent);
+        this.relativeJarPath = relativeJarPath;
+
     }
 
     /**
@@ -48,7 +50,7 @@ public class CustomClassLoader extends ClassLoader {
         // javablogging.package.ClassToLoad
         // and we have to convert it into the .class file name
         // like javablogging/package/ClassToLoad.class
-        String file = "D:\\Learning\\Clean Design\\mentor\\multi_class_loader\\external_jars\\c2\\"
+        String file = this.relativeJarPath
                 + name.replace('.', File.separatorChar)
                 + ".class";
         byte[] b = null;
@@ -115,25 +117,29 @@ public class CustomClassLoader extends ClassLoader {
         return buff;
     }
 
-    public InputStream getResourceAsStreamMy(String name) {
-        Objects.requireNonNull(name);
-        URL url = getResourceMy(name);
-        try {
-            return url != null ? url.openStream() : null;
-        } catch (IOException e) {
-            return null;
-        }
+    public String getRelativeJarPath() {
+        return relativeJarPath;
     }
 
-    public URL getResourceMy(String name) {
-        Objects.requireNonNull(name);
-        URL url;
-        url = BootLoader.findResource(name);
-        if (url == null) {
-            url = findResource(name);
-        }
-        return url;
-    }
+//    public InputStream getResourceAsStreamMy(String name) {
+//        Objects.requireNonNull(name);
+//        URL url = getResourceMy(name);
+//        try {
+//            return url != null ? url.openStream() : null;
+//        } catch (IOException e) {
+//            return null;
+//        }
+//    }
+//
+//    public URL getResourceMy(String name) {
+//        Objects.requireNonNull(name);
+//        URL url;
+//        url = BootLoader.findResource(name);
+//        if (url == null) {
+//            url = findResource(name);
+//        }
+//        return url;
+//    }
 
 
 }
